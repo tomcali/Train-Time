@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="UTF-8">
+
+<title>Train Time Firebase</title>
+
+</head>
+
+<body>
+<div> <h1> Train Time Firebase Setup </h1> </div>
+
+  <!-- jQuery -->
+<script src="https://code.jquery.com/jquery.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
+
+<script src="moment.min.js"></script>
+
+<script>
+  // Initialize Firebase
+
+// Create a variable to reference the database
+var config = {
+    apiKey: "AIzaSyCAvVoNcHa_sb2lHjo6Emy2N6ftCDyXQfw",
+    authDomain: "tomproject-92e56.firebaseapp.com",
+    databaseURL: "https://tomproject-92e56.firebaseio.com",
+    storageBucket: "tomproject-92e56.appspot.com",
+    messagingSenderId: "529039500415"
+  };
+  firebase.initializeApp(config);
+
+// Firebase information
+// Public-facing name help_outline Ride-Care
+// Project ID help_outline ride-care-7c85d
+// Web API Key AIzaSyBNKDQxtZjk6S7NwtlK0xgNT64ZDh3nx9s 
+// https://ride-care-7c85d.firebaseio.com/ 
+
+// Create a variable to reference the database
+var database = firebase.database();
+
+var next = ['2017-03-22 6:30 P','2017-03-22 6:35 P',
+        '2017-03-22 6:40 P','2017-03-22 6:45 P',
+        '2017-03-22 6:50 P','2017-03-22 6:55 P',
+        '2017-03-22 7:00 P',
+        '2017-03-22 7:05 P','2017-03-22 7:10 P'];
+
+var minutes = [];
+for (var i = 0; i < next.length; i++) {
+ // minutes[i] = moment().diff(moment(next[i], "YYYY-MM-DD HH:mm a"), 'minutes');
+  minutes[i] = moment(next[i], "YYYY-MM-DD HH:mm a").diff(moment(), 'minutes');
+  //moment(next[i], "YYYY-MM-DD HH:mm a").fromNow();
+};
+
+// var a = moment([2007, 0, 29]);
+// var b = moment([2007, 0, 28]);
+// a.diff(b, 'days')
+// duration.get("minutes")
+
+
+
+// load data into firebase
+firebase.database().ref('trains/').set({
+    'name': ['Gold Line North','Gold Line South',
+        'Red Line West/North','Purple Line West',
+        'Amtrak San Juaquin','Amtrak Pacific Surfliner South',
+        'Amtrak Pacific Surfliner North',
+        'Amtrak California Zephyr South','Amtrak California Zephyr North'],
+    'destination': ['Sierra Madre Villa','Atlantic',
+        'North Hollywood','Wilshire/Western',
+        'San Francisco','San Diego','Sacramento',
+        'Chicago','San Francisco'],
+    'frequency': [6,6,10,10,150,90,90,1440,1440],
+    'next': next,
+    'minutes': minutes
+  });
+
+// var now = moment();
+
+// moment("2010-10-20 4:30", "YYYY-MM-DD HH:mm")
+
+//  svar ref = database.ref("users");
+
+  </script>
+
+</body>
+
+</html>
